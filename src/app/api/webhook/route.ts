@@ -9,8 +9,7 @@ export async function POST(req: Request) {
   await mongoConnect();
   const bufData = Buffer.from(await req.arrayBuffer());
 
-  const endpointSecret =
-    "whsec_bd9a49c642a57db7e548dd4773d79697a94810e77b7a5a5178a9f8a6a625009d";
+  const endpointSecret = process.env.STRIPE_SECRET;
   const sig = req.headers.get("stripe-signature")!;
 
   let event;
