@@ -6,11 +6,10 @@ import { getDefaults } from "utils/zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormProvider, useForm } from "react-hook-form";
 import { z } from "zod";
-// import { useMutation } from "@tanstack/react-query";
 import { useCartContext } from "context/cart-context";
 import { OrderType, postOrder } from "data-fetchers/order";
-import { redirect } from "next/navigation";
 import { useRouter } from "next/navigation";
+import { useMutation } from "@tanstack/react-query";
 
 const orderSchema = z.object({
   fullname: z
@@ -34,20 +33,20 @@ export default function OrderForm() {
     defaultValues: getDefaults(orderSchema),
   });
 
-  // const sendOrder = useMutation({
-  //   mutationKey: ["order"],
-  //   mutationFn: postOrder,
-  // });
+  const sendOrder = useMutation({
+    mutationKey: ["order"],
+    mutationFn: postOrder,
+  });
 
   async function onSubmit(data: Form) {
     const order: OrderType = { ...data, productsIds: cartProducts };
-    // sendOrder.mutate(order);
-    const resp = await postOrder(order);
-    router.push(resp.URL);
+    sendOrder.mutate(order);
+    // const res = await postOrder(order);
+    console.log(sendOrder);
+    console.log(sendOrder.data);
 
-    // if (sendOrder.data.URL) {
-    //   redirect;
-    // }
+    // router.push(sendOrder.data.URL);
+
     form.reset(getDefaults(orderSchema));
   }
 
@@ -61,7 +60,11 @@ export default function OrderForm() {
           <FormTextInput fieldName={"fullname"} placeholder={"Fullname"} />
           <FormTextInput fieldName={"email"} placeholder={"Email"} />
           <FormTextInput fieldName={"country"} placeholder={"Country"} />
-          <div className={"flex gap-2"}>
+          <div
+            className={
+              "flex sm:flex-row md:flex-col lg:flex-row flex-col gap-2"
+            }
+          >
             <FormTextInput
               fieldName={"city"}
               placeholder={"City"}

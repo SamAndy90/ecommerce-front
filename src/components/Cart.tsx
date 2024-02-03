@@ -20,6 +20,7 @@ export default function Cart() {
   } = useQuery({
     queryKey: ["added-products", cartProducts.length],
     queryFn: () => getCartProducts(cartProducts),
+    // keepPrevious
     // enabled: !!cartProducts.length,
   });
 
@@ -31,7 +32,9 @@ export default function Cart() {
   return (
     <div className={"bg-white rounded-2xl overflow-hidden"}>
       <div
-        className={"flex text-zinc-500 font-semibold text-lg px-3 pt-6 pb-4"}
+        className={
+          "hidden sm:flex text-zinc-500 font-semibold text-lg px-3 pt-6 pb-4"
+        }
       >
         <span className={"basis-1/2 border-b pb-1"}>PRODUCT</span>
         <span className={"flex-1 grow-[2] border-b pb-1"}>QUANTITY</span>
@@ -43,7 +46,9 @@ export default function Cart() {
           return <CartItem key={p._id} product={p} />;
         })}
       {isSuccess && (
-        <div className={"p-5 font-semibold text-2xl text-right"}>
+        <div
+          className={"p-3 sm:p-5 font-semibold text-xl sm:text-2xl text-right"}
+        >
           <span className={"mr-4"}>Total:</span>$
           {products.reduce((acc, p) => {
             const amount = cartProducts.filter((id) => id === p._id).length;

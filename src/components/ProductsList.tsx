@@ -14,7 +14,11 @@ export default function ProductsList({ products, title }: ProductsListProps) {
       <Container>
         <div>
           <Title className={"text-3xl font-semibold"}>{title}</Title>
-          <div className={"grid grid-cols-4 gap-4 py-8"}>
+          <div
+            className={
+              "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-x-2 md:gap-x-1 xl:gap-x-4 py-8"
+            }
+          >
             {products.map((p) => {
               return <ProductCard product={p} key={p._id} />;
             })}

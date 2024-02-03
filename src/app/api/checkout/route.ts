@@ -3,6 +3,7 @@ import { ProductType } from "data-fetchers/products";
 import { mongoConnect } from "lib/mongo-connect";
 import Order from "models/Order";
 import Product from "models/Product";
+import { redirect } from "next/navigation";
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
 
@@ -38,7 +39,6 @@ export async function POST(req: Request) {
   }
 
   const orderDoc = await Order.create({ ...rest, cart_items, paid: false });
-  console.log(JSON.stringify(orderDoc));
 
   const session = await stripe.checkout.sessions.create({
     line_items: cart_items,
@@ -49,8 +49,6 @@ export async function POST(req: Request) {
     metadata: { orderId: orderDoc._id.toString() },
   });
 
-  console.log({ session });
-
-  return Response.json({ URL: session.url });
-  //   return NextResponse.redirect(session.url!);
+  return NextResponse.json({ URL: session.url });
+  // redirect(session.url!);
 }

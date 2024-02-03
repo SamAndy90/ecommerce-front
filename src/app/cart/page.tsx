@@ -10,6 +10,7 @@ import { Button } from "common/ui";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import Success from "components/Success";
 
 export default function CartPage() {
   const { cartProducts, clearCart } = useCartContext();
@@ -18,26 +19,28 @@ export default function CartPage() {
 
   useEffect(() => {
     if (searchParams.has("success")) {
-      setTimeout(() => {
+      const ind = setTimeout(() => {
         clearCart();
+      }, 0);
+      const ind1 = setTimeout(() => {
         router.push("/");
       }, 5000);
+      return () => {
+        clearTimeout(ind);
+        clearTimeout(ind1);
+      };
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (searchParams.has("success")) {
-    return (
-      <div>
-        Thanks for your order! We will email you when your order will be sent
-      </div>
-    );
+    return <Success />;
   }
   return (
     <section className={"py-8 bg-gray-100 flex-1"}>
       <Container>
         {!!cartProducts.length ? (
-          <div className={"flex gap-8"}>
+          <div className={"flex gap-8 md:gap-4 xl:gap-8 flex-col md:flex-row"}>
             <div className={"flex-1 space-y-3"}>
               <Title className={"font-semibold text-3xl"}>Cart</Title>
               <Cart />
@@ -52,12 +55,16 @@ export default function CartPage() {
         ) : (
           <div
             className={
-              "flex flex-col items-center gap-4 rounded-3xl bg-white mx-auto max-w-screen-lg py-40"
+              "flex flex-col items-center gap-4 rounded-3xl bg-white mx-auto max-w-screen-lg py-28 md:py-32 lg:py-40 px-2"
             }
           >
-            <p className={"text-5xl font-semibold "}>Your Cart is Empty</p>
-            <p className={"text-3xl font-medium "}>But you can still fix it</p>
-            <Link href={"/"}>
+            <p className={"text-4xl md:text-5xl font-semibold text-center"}>
+              Your Cart is Empty
+            </p>
+            <p className={"text-2xl md:text-3xl font-medium text-center"}>
+              But you can still fix it
+            </p>
+            <Link href={"/products"}>
               <Button colorVariant={"primary"}>Go to products</Button>
             </Link>
           </div>

@@ -51,13 +51,13 @@ export default function ProductPage({
                 />
               </div>
               {product.images && (
-                <div className={"mt-2 overflow-x-auto space-x-1 flex"}>
+                <div className={"mt-2 overflow-x-auto flex gap-0.5"}>
                   {product.images.map((img) => {
                     return (
                       <div
                         onClick={() => setActiveImg(img)}
                         className={clsx(
-                          "relative basis-1/4 pb-[20%] border border-gray-50 rounded-md",
+                          "relative basis-[calc(25%-2px)] shrink-0 pb-[20%] border border-gray-50 rounded-md",
                           { "border-lime-900": img === activeImg }
                         )}
                         key={img}

@@ -13,13 +13,13 @@ export function ProductCard({ product }: ProductCardProps) {
   return (
     <div
       className={
-        "hover:shadow-[0_0_20px_rgba(0,0,0,.1)] group p-2 rounded-lg overflow-hidden transition-shadow"
+        "hover:shadow-[0_0_20px_rgba(0,0,0,.1)] group p-2 rounded-lg overflow-hidden transition-shadow flex flex-col max-w-md mx-auto w-full"
       }
     >
       <Link
         href={`/products/${_id}`}
         className={
-          "relative pb-[90%] block overflow-hidden rounded-lg bg-white border border-gray-50"
+          "relative pb-[90%] block overflow-hidden rounded-lg bg-white border border-gray-100"
         }
       >
         <Image
@@ -31,12 +31,14 @@ export function ProductCard({ product }: ProductCardProps) {
           }
         />
       </Link>
-      <div className={"bg-gray-50 pt-4 pb-2 px-2 rounded-lg"}>
-        <Link href={`/products/${_id}`} className={"text-lg"}>
+      <div
+        className={"bg-gray-50 pt-4 pb-2 px-2 rounded-lg flex-1 flex flex-col"}
+      >
+        <Link href={`/products/${_id}`} className={"text-lg flex-1"}>
           {title}
         </Link>
-        <div className={"flex justify-between items-center gap-2 py-2"}>
-          <span className={"font-bold text-xl"}>{price}$</span>
+        <div className={"flex flex-wrap items-center gap-2 py-2"}>
+          <span className={"font-bold text-xl flex-1"}>{price}$</span>
           <AddToCartButton id={_id!.toString()} />
         </div>
       </div>
